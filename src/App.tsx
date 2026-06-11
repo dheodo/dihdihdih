@@ -801,16 +801,30 @@ ${leadForm.name || 'valued contact'}`;
           >
           {/* Hero Header Section */}
           <header id="hero-header" className="relative h-[85vh] flex items-end overflow-hidden group">
-        <motion.div style={{ y: isMobile ? 0 : heroY, willChange: 'transform' }} className="absolute -top-[120px] -bottom-[120px] left-0 right-0 z-0 h-[calc(100%+240px)] w-full">
+        <motion.div 
+          style={{ y: isMobile ? 0 : heroY, willChange: 'transform' }} 
+          className="absolute -top-[120px] -bottom-[120px] left-0 right-0 z-0 h-[calc(100%+240px)] w-full touch-pan-y cursor-grab active:cursor-grabbing"
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.15}
+          onDragEnd={(e, info) => {
+            const swipeThreshold = 50;
+            if (info.offset.x < -swipeThreshold) {
+              setHeroCarouselIndex((prev) => (prev + 1) % IMAGES.imaginationGrid.length);
+            } else if (info.offset.x > swipeThreshold) {
+              setHeroCarouselIndex((prev) => (prev - 1 + IMAGES.imaginationGrid.length) % IMAGES.imaginationGrid.length);
+            }
+          }}
+        >
           <AnimatePresence mode="wait">
             <motion.img 
                 key={heroCarouselIndex}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.25 }}
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-center scale-[1.01] will-change-transform" 
+                className="w-full h-full object-cover object-center scale-[1.01] will-change-transform select-none pointer-events-none" 
                 alt="Maintenance Masters design agency signature dark living space"
                 src={IMAGES.imaginationGrid[heroCarouselIndex]}
             />
@@ -956,16 +970,17 @@ ${leadForm.name || 'valued contact'}`;
           >
             {/* Aspect controller frame */}
             <div className="relative min-h-[680px] xs:min-h-[620px] md:h-[640px] w-full overflow-hidden rounded-xl bg-forest-deep/5 shadow-inner group">
-              <AnimatePresence mode="popLayout">
+              <AnimatePresence mode="wait">
                 <motion.div
                   key={carouselIndex}
-                  initial={{ opacity: 0, x: 60 }}
+                  initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -60 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  exit={{ opacity: 0, x: -30 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                  style={{ willChange: 'transform, opacity' }}
                   drag="x"
                   dragConstraints={{ left: 0, right: 0 }}
-                  dragElastic={0.4}
+                  dragElastic={0.15}
                   onDragEnd={(e, info) => {
                     const swipeThreshold = 50;
                     if (info.offset.x < -swipeThreshold) {
@@ -982,7 +997,7 @@ ${leadForm.name || 'valued contact'}`;
                       referrerPolicy="no-referrer"
                       src={displayCarouselSlides[carouselIndex].image || null} 
                       alt={displayCarouselSlides[carouselIndex].title} 
-                      className="w-full h-full object-cover object-center select-none pointer-events-none transition-all duration-300 scale-[1.01]"
+                      className="w-full h-full object-cover object-center select-none pointer-events-none scale-[1.01] will-change-transform"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-transparent to-forest-deep/15"></div>
@@ -1503,13 +1518,14 @@ ${leadForm.name || 'valued contact'}`;
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={testimonialIndex}
-                    initial={{ opacity: 0, x: 50, scale: 0.98 }}
+                    initial={{ opacity: 0, x: 30, scale: 0.99 }}
                     animate={{ opacity: 1, x: 0, scale: 1 }}
-                    exit={{ opacity: 0, x: -50, scale: 0.98 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    exit={{ opacity: 0, x: -30, scale: 0.99 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    style={{ willChange: 'transform, opacity' }}
                     drag="x"
                     dragConstraints={{ left: 0, right: 0 }}
-                    dragElastic={0.4}
+                    dragElastic={0.15}
                     onDragEnd={(e, info) => {
                       const swipeThreshold = 40;
                       if (info.offset.x < -swipeThreshold) {
