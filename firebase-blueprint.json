@@ -1,0 +1,41 @@
+{
+  "entities": {
+    "project": {
+      "title": "Project",
+      "description": "A project in the portfolio",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "image": { "type": "string" },
+        "category": { "type": "string", "enum": ["residential", "commercial", "renovation", "all"] },
+        "description": { "type": "string" },
+        "location": { "type": "string" },
+        "year": { "type": "string" },
+        "aspectRatio": { "type": "string" },
+        "createdAt": { "type": "number", "description": "Timestamp" },
+        "isFeatured": { "type": "boolean", "description": "Whether to show on homepage" }
+      },
+      "required": ["title", "subtitle", "image", "category", "description", "location", "year", "aspectRatio", "createdAt", "isFeatured"]
+    },
+    "admin": {
+      "title": "Admin",
+      "description": "An admin user",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" }
+      },
+      "required": ["email"]
+    }
+  },
+  "firestore": {
+    "projects/{projectId}": {
+      "schema": { "$ref": "#/entities/project" },
+      "description": "Portfolio projects"
+    },
+    "admins/{userId}": {
+      "schema": { "$ref": "#/entities/admin" },
+      "description": "Admin users allowed to manage projects"
+    }
+  }
+}

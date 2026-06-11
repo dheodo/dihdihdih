@@ -1,0 +1,6 @@
+{
+  "name": "Maintenance Masters",
+  "description": "Maintenance Masters Interior Design Agency Landing Page - showcasing bespoke high-end modern organic spaces, design portfolios, and premium services.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
