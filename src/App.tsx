@@ -662,10 +662,11 @@ ${leadForm.name || 'valued contact'}`;
       {/* Dynamic Top Navigation Bar */}
       <motion.nav 
         id="top-navbar" 
-        initial={{ y: -100, opacity: 0 }}
+        initial={isMobile ? { opacity: 0 } : { y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="bg-cream-soft/85 backdrop-blur-md border-b border-sage-muted/[0.08] sticky top-0 z-[100] transition-colors duration-300 overflow-x-hidden w-full"
+        transition={{ duration: isMobile ? 0.3 : 0.6, ease: "easeOut" }}
+        style={{ willChange: "transform, opacity" }}
+        className="bg-cream-soft/95 md:bg-cream-soft/85 backdrop-blur-none md:backdrop-blur-md border-b border-sage-muted/[0.08] sticky top-0 z-[100] transition-colors duration-300 overflow-x-hidden w-full"
       >
         <div className="flex justify-between items-center w-full px-4 py-4 md:px-16 md:py-6 max-w-7xl mx-auto gap-2">
           
