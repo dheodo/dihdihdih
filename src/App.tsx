@@ -34,6 +34,35 @@ import Reviews from './components/Reviews';
 import Breadcrumbs from './components/Breadcrumbs';
 import { TextReveal } from './components/TextReveal';
 import { useFirebaseProjects, extractImageUrl } from './lib/hooks';
+import { Helmet } from 'react-helmet-async';
+
+// Metadata configuration for different pages to optimize search indexing
+const METADATA_BY_PAGE: Record<string, { title: string; description: string }> = {
+  home: {
+    title: "Maintenance Masters | Luxury Interior Curation & Renovation",
+    description: "Discover Maintenance Masters, an elite interior design and architectural renovation agency in India. We curate exquisite living spaces blending modern aesthetics with functional luxury."
+  },
+  about: {
+    title: "About Our Craft | Maintenance Masters",
+    description: "Learn about the architectural vision, philosophy, and master craftsmen behind Maintenance Masters. Delivering timeless interior transformations since 2012."
+  },
+  services: {
+    title: "Premium Services | Luxury Interior Renovations & Space Curation",
+    description: "Explore our masterclass design and maintenance services, including full-home bespoke architecture, luxury landscape planning, and structural restorations."
+  },
+  project: {
+    title: "Exquisite Signature Portfolio | Maintenance Masters",
+    description: "Browse our hand-curated portfolio of premium architectural highlights, penthouse design loops, and luxury living room transformations across Mumbai and beyond."
+  },
+  reviews: {
+    title: "Client Testimonials & Praise | Maintenance Masters",
+    description: "Read authentic stories, reviews, and high-fidelity praise from institutional and private clientele who experienced our luxury space curation."
+  },
+  contact: {
+    title: "Inquire & Collaborate with Our Artisans | Maintenance Masters",
+    description: "Reach out to discuss your luxury interior design or structural renovation projects. Get bespoke counsel, expert quotes, and high-fidelity project plans."
+  }
+};
 
 // Curated high-fidelity highlights for touch carousel
 const CAROUSEL_SLIDES = [
@@ -223,7 +252,38 @@ export default function App() {
   const [activeFooterDoc, setActiveFooterDoc] = useState<string | null>(null);
 
   // Active page state ('home' | 'about' | 'services' | 'contact' | 'project' | 'reviews')
-  const [currentPage, setCurrentPage] = useState<'home' | 'about' | 'services' | 'contact' | 'project' | 'reviews'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'about' | 'services' | 'contact' | 'project' | 'reviews'>(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const pageParam = params.get('page');
+      if (pageParam && ['home', 'about', 'services', 'contact', 'project', 'reviews'].includes(pageParam)) {
+        return pageParam as 'home' | 'about' | 'services' | 'contact' | 'project' | 'reviews';
+      }
+    } catch (e) {
+      console.warn("Error reading URL search parameter", e);
+    }
+    return 'home';
+  });
+
+  // Automatically sync currentPage changes to the URL query parameters for robust browser history, sharing, and search indexing
+  useEffect(() => {
+    try {
+      const currentUrl = new URL(window.location.href);
+      if (currentPage === 'home') {
+        currentUrl.searchParams.delete('page');
+      } else {
+        currentUrl.searchParams.set('page', currentPage);
+      }
+      // Only pushState if the parameter value actually changed to prevent duplicating history frames
+      const params = new URLSearchParams(window.location.search);
+      const activeParam = params.get('page') || 'home';
+      if (activeParam !== currentPage) {
+        window.history.pushState({}, '', currentUrl.toString());
+      }
+    } catch (e) {
+      console.warn("Error syncing state with URL parameters", e);
+    }
+  }, [currentPage]);
 
   // Touch carousel active index for Inspiration section
   const [carouselIndex, setCarouselIndex] = useState(0);
@@ -649,8 +709,14 @@ ${leadForm.name || 'valued contact'}`;
     }
   };
 
+  const currentMetadata = METADATA_BY_PAGE[currentPage] || METADATA_BY_PAGE.home;
+
   return (
     <div id="maintenance-masters-app-root" className="min-h-screen bg-cream-soft text-forest-deep flex flex-col font-sans antialiased selection:bg-sage-muted selection:text-forest-deep scroll-smooth overflow-x-hidden max-w-full">
+      <Helmet>
+        <title>{currentMetadata.title}</title>
+        <meta name="description" content={currentMetadata.description} />
+      </Helmet>
       
       {/* Scroll Progress Bar */}
       <motion.div 
