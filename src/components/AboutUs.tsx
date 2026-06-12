@@ -85,6 +85,14 @@ export default function AboutUs({ onOpenInquiry }: AboutUsProps) {
       answer: "As our name implies, long-term maintenance is integral to our curation philosophy. We select premium, low-maintenance raw materials—such as seasoned teak, honed slate, and Treated limestone—that naturally age gracefully. Additionally, we provide comprehensive seasonal care protocols and maintenance assessments to ensure your spatial coordinates remain pristine for generations."
     },
     {
+      question: "Why are you rated among the best interior designers in Navi Mumbai?",
+      answer: "We are recognized among the best interior designers in Navi Mumbai because of our unparalleled commitment to craftsmanship and bespoke space curation. We combine local cultural sensibilities with high-end global design practices, ensuring each home we curate feels deeply unique."
+    },
+    {
+      question: "Do you offer premium facility maintenance or civil contractors services in Navi Mumbai?",
+      answer: "Yes, we are full-service civil contractors in Navi Mumbai. We provide elite, long-term premium facility maintenance Navi Mumbai programs, including bespoke plumbing, structural repairs, electrical upgrades, and routine premium masonry upkeep to keep custom estates functioning flawlessly."
+    },
+    {
       question: "Do you offer turn-key project management?",
       answer: "Yes. From the initial tectonic blueprint to the final placement of bespoke textiles, we manage all vendor logistics, artisan coordination, and on-site assembly to ensure a frictionless transition into your new environment."
     },
@@ -125,7 +133,7 @@ export default function AboutUs({ onOpenInquiry }: AboutUsProps) {
                 transition={{ duration: 0.2, delay: 0.05 }}
                 className="font-body-lg text-body-lg text-on-surface-variant max-w-xl leading-relaxed font-light"
               >
-                Every space is a blank canvas — a chance to shape deep emotion through clean form, ambient light, and organic texture. Our work balances silent architectural gravity with warm, tactile modernism.
+                Every space is a blank canvas — a chance to shape deep emotion. As a premier <strong>luxury interior design Navi Mumbai</strong> agency, we curate bespoke homes, offering <strong>premium home renovation Navi Mumbai</strong> services and <strong>elite home renovation contractors</strong> who balance silent architectural gravity with warm, tactile modernism.
               </motion.p>
               
               <div className="flex gap-4 items-center pt-2">

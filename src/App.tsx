@@ -37,30 +37,36 @@ import { useFirebaseProjects, extractImageUrl } from './lib/hooks';
 import { Helmet } from 'react-helmet-async';
 
 // Metadata configuration for different pages to optimize search indexing
-const METADATA_BY_PAGE: Record<string, { title: string; description: string }> = {
+const METADATA_BY_PAGE: Record<string, { title: string; description: string; keywords: string }> = {
   home: {
     title: "Maintenance Masters | Luxury Interior Curation & Renovation",
-    description: "Discover Maintenance Masters, an elite interior design and architectural renovation agency in India. We curate exquisite living spaces blending modern aesthetics with functional luxury."
+    description: "Discover Maintenance Masters, an elite interior design and architectural renovation agency in India. We curate exquisite living spaces blending modern aesthetics with functional luxury.",
+    keywords: "luxury interior design Navi Mumbai, turnkey home renovation Navi Mumbai, best interior designers in Navi Mumbai, commercial office interior fitouts Navi Mumbai, sustainable home decor Navi Mumbai, custom modular kitchen Navi Mumbai, expert residential renovation contractors Navi Mumbai, modern villa landscaping Navi Mumbai, Vastu-compliant interior design Navi Mumbai, luxury apartment fit-outs Navi Mumbai, bespoke furniture design Navi Mumbai, elite facility maintenance services Navi Mumbai, civil contractors Navi Mumbai, interior decorators Navi Mumbai, best home interior designers Navi Mumbai, turnkey interior solutions Navi Mumbai, modern apartment renovation Navi Mumbai, residential architects Navi Mumbai"
   },
   about: {
     title: "About Our Craft | Maintenance Masters",
-    description: "Learn about the architectural vision, philosophy, and master craftsmen behind Maintenance Masters. Delivering timeless interior transformations since 2012."
+    description: "Learn about the architectural vision, philosophy, and master craftsmen behind Maintenance Masters. Delivering timeless interior transformations since 2012.",
+    keywords: "about Maintenance Masters, luxury home renovators, elite interior designer team Navi Mumbai, structural renovation experts Navi Mumbai, sustainable luxury design, bespoke furniture craft architecture, professional home renovation contractors Navi Mumbai"
   },
   services: {
     title: "Premium Services | Luxury Interior Renovations & Space Curation",
-    description: "Explore our masterclass design and maintenance services, including full-home bespoke architecture, luxury landscape planning, and structural restorations."
+    description: "Explore our masterclass design and maintenance services, including full-home bespoke architecture, luxury landscape planning, and structural restorations.",
+    keywords: "luxury interior styling services, modular kitchen renovation Navi Mumbai, high-end bathroom interior styling, custom home architecture Navi Mumbai, premium facility maintenance Navi Mumbai, plumbing electrical repairs Navi Mumbai, residential interior services Navi Mumbai, turnkey home office design, custom furniture fabrication Navi Mumbai"
   },
   project: {
     title: "Exquisite Signature Portfolio | Maintenance Masters",
-    description: "Browse our hand-curated portfolio of premium architectural highlights, penthouse design loops, and luxury living room transformations across Mumbai and beyond."
+    description: "Browse our hand-curated portfolio of premium architectural highlights, penthouse design loops, and luxury living room transformations across Navi Mumbai and beyond.",
+    keywords: "interior design portfolio Navi Mumbai, penthouse styling highlights, luxury living room layout, dining lounge architecture, modern luxury designs, signature architectural highlights, best renovation projects Navi Mumbai, custom residential portfolio Navi Mumbai"
   },
   reviews: {
     title: "Client Testimonials & Praise | Maintenance Masters",
-    description: "Read authentic stories, reviews, and high-fidelity praise from institutional and private clientele who experienced our luxury space curation."
+    description: "Read authentic stories, reviews, and high-fidelity praise from institutional and private clientele who experienced our luxury space curation.",
+    keywords: "Maintenance Masters reviews, client testimonials interior designers Navi Mumbai, trusted luxury renovation Navi Mumbai, award winning interior design ratings, expert contractor feedback Navi Mumbai, genuine design client service Navi Mumbai"
   },
   contact: {
     title: "Inquire & Collaborate with Our Artisans | Maintenance Masters",
-    description: "Reach out to discuss your luxury interior design or structural renovation projects. Get bespoke counsel, expert quotes, and high-fidelity project plans."
+    description: "Reach out to discuss your luxury interior design or structural renovation projects. Get bespoke counsel, expert quotes, and high-fidelity project plans.",
+    keywords: "hire interior designer Navi Mumbai, inquire luxury home renovation, contact Maintenance Masters, free consultation interior styling, custom home architecture quotes Navi Mumbai, facility maintenance support Navi Mumbai, renovation enquiry Navi Mumbai, professional interior consultation Navi Mumbai"
   }
 };
 
@@ -70,7 +76,7 @@ const CAROUSEL_SLIDES = [
     image: IMAGES.imaginationGrid[0],
     title: "The Horizon Penthouse",
     subtitle: "Aesthetic Living Curation",
-    description: "Breathtaking high-rise penthouse living space in Mumbai, blending custom teakwood lattices, vibrant contemporary art, and rich plush velvet tones."
+    description: "Breathtaking high-rise penthouse living space in Navi Mumbai, blending custom teakwood lattices, vibrant contemporary art, and rich plush velvet tones."
   },
   {
     image: IMAGES.imaginationGrid[1],
@@ -716,6 +722,10 @@ ${leadForm.name || 'valued contact'}`;
       <Helmet>
         <title>{currentMetadata.title}</title>
         <meta name="description" content={currentMetadata.description} />
+        <meta name="keywords" content={currentMetadata.keywords} />
+        <meta property="og:title" content={currentMetadata.title} />
+        <meta property="og:description" content={currentMetadata.description} />
+        <meta property="og:type" content="website" />
       </Helmet>
       
       {/* Scroll Progress Bar */}

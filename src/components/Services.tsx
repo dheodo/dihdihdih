@@ -150,6 +150,14 @@ export default function Services({ onOpenInquiry }: ServicesProps) {
       answer: "We offer a structured hybrid billing model depending on project complexity. For custom design phases (stages 1 to 3), we apply flat curation fees. For manufacturing bespoke pieces, architectural execution, and on-site oversight, we charge direct percentage placement premiums. Fully transparent budgets are finalized during Discovery."
     },
     {
+      question: "Do you undertake luxury kitchen and bathroom renovation services in Navi Mumbai?",
+      answer: "Absolutely. We are highly rated for luxury modular kitchen renovations and customized bathroom layout curation in Navi Mumbai. We integrate water-sensing fixtures, custom marble or quartz countertops, premium seamless cabinetry, and smart hidden organization solutions."
+    },
+    {
+      question: "What scope of home curation or villa design services do you offer?",
+      answer: "We handle full-home premium residential interior design, custom villa architecture, hospitality suite styling, and complete commercial space renovations. Our master decorators and structural architects coordinate everything from AutoCAD plans to final bespoke furniture handovers."
+    },
+    {
       question: "Do you offer integrated lighting and sensory automation?",
       answer: "Yes. We believe lighting is the primary architect of mood. We curate intelligent lighting grids that transition throughout the solar day, paired with acoustic treatments and thermal calibrations to create a multi-sensory environment that promotes biological well-being."
     },
