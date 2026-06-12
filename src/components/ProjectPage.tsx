@@ -48,6 +48,8 @@ const ProjectCardItem = ({
             isLoaded ? 'blur-0 opacity-100' : 'blur-xl opacity-40 scale-105'
           }`}
           loading="lazy"
+          decoding="async"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           onLoad={() => setIsLoaded(true)}
           onError={(e) => {
             setIsLoaded(true);
@@ -304,6 +306,7 @@ export default function ProjectPage({ onProjectSelect, onNavigateToContact, proj
                             className="w-full h-full object-cover"
                             referrerPolicy="no-referrer"
                             loading="lazy"
+                            decoding="async"
                             onError={(e: any) => {
                               e.target.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2670&auto=format&fit=crop';
                             }}
@@ -394,6 +397,7 @@ export default function ProjectPage({ onProjectSelect, onNavigateToContact, proj
                                             className={`h-full w-full object-cover transition-transform duration-300 ${isActive ? '' : 'group-hover:scale-105'}`}
                                             referrerPolicy="no-referrer"
                                             loading="lazy"
+                                            decoding="async"
                                             onError={(e) => {
                                               (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
                                             }}

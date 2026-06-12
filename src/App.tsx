@@ -21,7 +21,8 @@ import {
   ChevronRight,
   BookOpen,
   Clock,
-  Maximize2
+  Maximize2,
+  Instagram
 } from 'lucide-react';
 import { SERVICES, BELIEFS, TRUSTED_COMPANIES, IMAGES, TESTIMONIALS } from './data';
 import { Project, LeadInquiry } from './types';
@@ -1781,6 +1782,15 @@ ${leadForm.name || 'valued contact'}`;
                 >
                   <Mail className="w-4 h-4" />
                 </a>
+                <a 
+                  href="https://www.instagram.com/main_tenancemasters" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 flex items-center justify-center border border-paper-white/20 rounded-full hover:bg-paper-white hover:text-forest-deep hover:border-paper-white transition-all"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
               </div>
             </div>
 
@@ -1884,7 +1894,7 @@ ${leadForm.name || 'valued contact'}`;
             <div>
               <h4 className="font-label-caps text-label-caps mb-6 text-sage-muted tracking-widest uppercase">Company Details</h4>
               <p className="font-body-md text-xs text-paper-white/60 leading-relaxed max-w-xs mb-4">
-                Main HQ: Mehta Residency, Flat No. 6, near Hanuman Mandir, Talvali, Ghansoli Gaon, Ghansoli, Thane, Navi Mumbai, Maharashtra 400701
+                Main HQ: Flat No-02, Nath Sadan, Near Hanuman Mandir, Ghansoli Goan, Ghansoli, Navi Mumbai
               </p>
               <ul className="space-y-3 font-body-md text-sm text-paper-white/80">
                 <li>
@@ -1897,6 +1907,16 @@ ${leadForm.name || 'valued contact'}`;
                   >
                     Contact Us
                   </button>
+                </li>
+                <li>
+                  <a 
+                    href="https://www.instagram.com/main_tenancemasters" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-sage-muted transition-colors cursor-pointer block"
+                  >
+                    Follow on Instagram
+                  </a>
                 </li>
               </ul>
             </div>

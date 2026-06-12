@@ -9,7 +9,8 @@ import {
   ArrowRight,
   Trash2,
   MapPin,
-  MessageCircle
+  MessageCircle,
+  Instagram
 } from 'lucide-react';
 
 interface ContactProps {
@@ -346,6 +347,23 @@ maintenance master`;
                     
                     <div className="space-y-4">
                       
+                      <div className="flex gap-4 p-4 xs:p-5 bg-cream-soft/30 rounded-xl border border-sage-muted/10">
+                        <div className="w-10 h-10 rounded-lg bg-forest-deep flex items-center justify-center shrink-0">
+                          <Instagram className="w-5 h-5 text-paper-white" />
+                        </div>
+                        <div>
+                          <span className="font-label-caps text-[10px] text-sage-muted block tracking-wider uppercase">FOLLOW OUR CRAFT</span>
+                          <a 
+                            href="https://www.instagram.com/main_tenancemasters" 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-serif text-sm font-bold text-forest-deep hover:text-sage-muted transition-colors"
+                          >
+                            @main_tenancemasters
+                          </a>
+                        </div>
+                      </div>
+
                        <div className="flex gap-4 p-4 xs:p-5 bg-cream-soft/30 rounded-xl border border-sage-muted/10">
                         <div className="w-10 h-10 rounded-lg bg-forest-deep flex items-center justify-center shrink-0">
                           <Mail className="w-5 h-5 text-paper-white" />
@@ -421,7 +439,7 @@ maintenance master`;
                         <div>
                           <span className="font-label-caps text-[10px] text-sage-muted block tracking-wider uppercase">STUDIO COORDINATE ADDRESS</span>
                           <span className="font-serif text-sm font-bold text-forest-deep block leading-snug">
-                            Mehta Residency, Flat No. 6, near Hanuman Mandir, Talvali, Ghansoli Gaon, Ghansoli, Thane, Navi Mumbai, Maharashtra 400701
+                            Flat No-02, Nath Sadan, Near Hanuman Mandir, Ghansoli Goan, Ghansoli, Navi Mumbai
                           </span>
                         </div>
                       </div>
