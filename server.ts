@@ -6,6 +6,10 @@ import path from "path";
 
 async function startServer() {
   const app = express();
+  
+  // Enable trust proxy to correctly recognize X-Forwarded-Proto header behind Cloud Run / Nginx proxies
+  app.set("trust proxy", true);
+
   const httpServer = createServer(app);
   const io = new Server(httpServer);
   const PORT = 3000;
@@ -20,8 +24,10 @@ async function startServer() {
 
   // Sitemap.xml dynamic endpoint matching current host protocol and domain
   app.get("/sitemap.xml", (req, res) => {
-    const protocol = req.headers["x-forwarded-proto"] || req.protocol || "http";
-    const host = req.get("host");
+    const host = req.get("host") || "";
+    // On localhost or local networks, default to http. On public web environments, force secure https
+    const isLocal = host.includes("localhost") || host.includes("127.0.0.1") || host.startsWith("192.168.") || host.startsWith("10.");
+    const protocol = isLocal ? "http" : "https";
     const baseUrl = `${protocol}://${host}`;
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
