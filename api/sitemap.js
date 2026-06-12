@@ -1,5 +1,8 @@
 export default function handler(req, res) {
-  const host = req.headers.host || "";
+  const forwardedHost = req.headers["x-forwarded-host"];
+  const host = forwardedHost
+    ? (Array.isArray(forwardedHost) ? forwardedHost[0] : forwardedHost).split(",")[0].trim()
+    : (req.headers.host || "");
   // Check if we are running in localhost or local development environment
   const isLocal = host.includes("localhost") || host.includes("127.0.0.1") || host.startsWith("192.168.") || host.startsWith("10.");
   const protocol = isLocal ? "http" : "https";

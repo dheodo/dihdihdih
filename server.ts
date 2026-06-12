@@ -24,7 +24,10 @@ async function startServer() {
 
   // Sitemap.xml dynamic endpoint matching current host protocol and domain
   app.get("/sitemap.xml", (req, res) => {
-    const host = req.get("host") || "";
+    const forwardedHost = req.headers["x-forwarded-host"];
+    const host = forwardedHost
+      ? (Array.isArray(forwardedHost) ? forwardedHost[0] : forwardedHost).split(",")[0].trim()
+      : (req.get("host") || "");
     // On localhost or local networks, default to http. On public web environments, force secure https
     const isLocal = host.includes("localhost") || host.includes("127.0.0.1") || host.startsWith("192.168.") || host.startsWith("10.");
     const protocol = isLocal ? "http" : "https";
