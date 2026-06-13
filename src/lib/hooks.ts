@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db, handleFirestoreError, OperationType } from './firebase';
-import { collection, onSnapshot, addDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { Project } from '../types';
 
 export function extractImageUrl(image: any): string | null {
@@ -119,41 +119,44 @@ export function useFirebaseProjects() {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const q = collection(db, 'projects');
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      if (snapshot.empty) {
-        seedInitialProjects();
-        return;
-      }
-      const projData: Project[] = [];
-      snapshot.forEach((doc) => {
-        projData.push({ id: doc.id, ...doc.data() } as Project);
-      });
-      const toMs = (v: any) => {
-        if (!v) return 0;
-        if (typeof v === 'number') return v;
-        if (typeof v.toMillis === 'function') return v.toMillis();
-        return 0;
-      };
-      projData.sort((a: any, b: any) => toMs(b.createdAt) - toMs(a.createdAt));
-      
+    const fetchProjects = async () => {
       try {
-        sessionStorage.setItem('firebaseProjectsCache', JSON.stringify(projData));
-      } catch (e) {
-        // Silently handle if storage is not available or quota exceeded
+        const q = collection(db, 'projects');
+        const snapshot = await getDocs(q);
+        if (snapshot.empty) {
+          seedInitialProjects();
+          return;
+        }
+        const projData: Project[] = [];
+        snapshot.forEach((doc) => {
+          projData.push({ id: doc.id, ...doc.data() } as Project);
+        });
+        const toMs = (v: any) => {
+          if (!v) return 0;
+          if (typeof v === 'number') return v;
+          if (typeof v.toMillis === 'function') return v.toMillis();
+          return 0;
+        };
+        projData.sort((a: any, b: any) => toMs(b.createdAt) - toMs(a.createdAt));
+        
+        try {
+          sessionStorage.setItem('firebaseProjectsCache', JSON.stringify(projData));
+        } catch (e) {
+          // Silently handle if storage is not available or quota exceeded
+        }
+        
+        setProjects(projData);
+        setLoading(false);
+      } catch (err) {
+        setError(err as Error);
+        setLoading(false);
+        try {
+          handleFirestoreError(err as Error, OperationType.GET, 'projects');
+        } catch(e) {}
       }
-      
-      setProjects(projData);
-      setLoading(false);
-    }, (err) => {
-      setError(err as Error);
-      setLoading(false);
-      try {
-        handleFirestoreError(err, OperationType.GET, 'projects');
-      } catch(e) {}
-    });
+    };
 
-    return () => unsubscribe();
+    fetchProjects();
   }, []);
 
   return { projects, loading, error };

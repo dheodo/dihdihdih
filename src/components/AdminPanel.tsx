@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db, storage, handleFirestoreError, OperationType } from '../lib/firebase';
-import { collection, addDoc, getDocs, deleteDoc, doc, Timestamp, onSnapshot } from 'firebase/firestore';
+import { collection, addDoc, getDocs, deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Project } from '../types';
 import { X, Plus, Trash2 } from 'lucide-react';
@@ -74,19 +74,24 @@ export default function AdminPanel({ onClose }: AdminPanelProps) {
   };
 
   useEffect(() => {
-    const q = collection(db, 'projects');
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const projData: Project[] = [];
-      snapshot.forEach((doc) => {
-        projData.push({ id: doc.id, ...doc.data() } as Project);
-      });
-      setProjects(projData);
-      setLoading(false);
-    }, (err) => {
-      handleFirestoreError(err, OperationType.GET, 'projects');
-      setLoading(false);
-    });
-    return () => unsubscribe();
+    const fetchProjects = async () => {
+      setLoading(true);
+      try {
+        const q = collection(db, 'projects');
+        const snapshot = await getDocs(q);
+        const projData: Project[] = [];
+        snapshot.forEach((doc) => {
+          projData.push({ id: doc.id, ...doc.data() } as Project);
+        });
+        setProjects(projData);
+        setLoading(false);
+      } catch (err) {
+        handleFirestoreError(err as Error, OperationType.GET, 'projects');
+        setLoading(false);
+      }
+    };
+    
+    fetchProjects();
   }, []);
 
   const handleAddProject = async (e: React.FormEvent) => {
