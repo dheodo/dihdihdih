@@ -80,7 +80,7 @@ export default function ProjectPage({ onProjectSelect, onNavigateToContact, proj
     ? projects 
     : projects.filter(p => p.category === activeCategory);
 
-  const categories = ['all', 'residential', 'commercial', 'renovation', 'kitchen&bath', 'office design'];
+  const categories = ['all', 'residential', 'commercial', 'renovation', 'kitchen&bath', 'office design', 'plumber', 'furniture maker', 'painting', 'roofing services', 'electrician'];
 
   const handleCategorySelect = (cat: string) => {
     setActiveCategory(cat);

@@ -309,6 +309,69 @@ export default function Services({ onOpenInquiry }: ServicesProps) {
         </div>
       </section>
 
+      {/* Our Extended Services */}
+      <section className="py-14 xs:py-16 md:py-24 bg-sage-muted/5 relative overflow-hidden">
+        <div className="px-4 xs:px-6 md:px-16 max-w-7xl mx-auto">
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5 }}
+            className="text-center max-w-2xl mx-auto mb-16 space-y-4"
+          >
+            <span className="font-label-caps text-label-caps text-forest-deep/60 tracking-widest block">EXTENDED CAPABILITIES</span>
+            <h2 className="font-headline-md text-headline-md md:text-4xl font-serif uppercase text-forest-deep font-bold">
+              Our Service Scope
+            </h2>
+            <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              We provide comprehensive residential and commercial maintenance and renovation solutions.
+            </p>
+          </motion.div>
+
+          {/* Staggered Grid for Premium Feel */}
+          <motion.div 
+            className="flex flex-wrap justify-center gap-4"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.08,
+                },
+              },
+            }}
+          >
+            {[
+              "Interior Designer",
+              "Plumber",
+              "Painting",
+              "Electrician",
+              "Furniture Maker",
+              "Bathroom Renovator",
+              "Kitchen Renovator",
+              "Roofing Services",
+              "House Cleaning Services"
+            ].map((service) => (
+              <motion.div
+                key={service}
+                variants={{
+                  hidden: { opacity: 0, scale: 0.9 },
+                  visible: { opacity: 1, scale: 1 },
+                }}
+                whileHover={{ scale: 1.05, borderColor: "rgba(10, 35, 25, 0.4)" }}
+                className="bg-paper-white/50 backdrop-blur-sm px-8 py-4 rounded-full border border-forest-deep/10 shadow-sm text-center font-serif text-sm font-medium text-forest-deep cursor-default transition-all duration-300"
+              >
+                {service}
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
       {/* Interactive Project Estimator Tool (Full Visual Widget) */}
       <motion.section 
         initial={{ opacity: 0, y: 30 }}

@@ -326,6 +326,77 @@ export default function AboutUs({ onOpenInquiry }: AboutUsProps) {
         </div>
       </section>
 
+      {/* Our Professional Services Categories */}
+      <section className="py-14 xs:py-16 md:py-24 bg-sage-muted/5 relative overflow-hidden">
+        <div className="px-4 xs:px-6 md:px-16 max-w-7xl mx-auto">
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5 }}
+            className="text-center max-w-2xl mx-auto mb-16 space-y-4"
+          >
+            <span className="font-label-caps text-label-caps text-forest-deep/60 tracking-widest block">COMPREHENSIVE CAPABILITIES</span>
+            <h2 className="font-headline-md text-headline-md md:text-4xl font-serif uppercase text-forest-deep font-bold">
+              Our Professional Scope
+            </h2>
+            <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              We provide comprehensive residential and commercial maintenance, design, and renovation solutions to maintain the sanctity of your space.
+            </p>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+            {/* Design & Renovation Category */}
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <h3 className="font-serif text-2xl font-bold text-forest-deep mb-8 pb-2 border-b-2 border-sage-muted/20">Design & Transformation</h3>
+              <div className="space-y-6">
+                {[
+                  { title: "Interior Designer", desc: "Tailored spatial planning, conceptual mood boards, and aesthetic refinement for luxury living." },
+                  { title: "Furniture Maker", desc: "Handcrafted, bespoke furniture tailored to exact space dimensions and material preferences." },
+                  { title: "Bathroom Renovator", desc: "Revitalizing hygiene spaces with modern fixture integration and premium tile work." },
+                  { title: "Kitchen Renovator", desc: "Optimizing culinary hubs with custom cabinetry, ergonomic layout enhancements, and durable material installation." }
+                ].map((item) => (
+                  <div key={item.title} className="bg-paper-white/50 p-6 rounded-lg border border-forest-deep/5 shadow-sm">
+                    <h4 className="font-serif text-lg font-bold text-forest-deep mb-2">{item.title}</h4>
+                    <p className="text-sm text-on-surface-variant leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Maintenance & Technical Category */}
+            <motion.div 
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <h3 className="font-serif text-2xl font-bold text-forest-deep mb-8 pb-2 border-b-2 border-sage-muted/20">Essential Maintenance</h3>
+              <div className="space-y-6">
+                {[
+                  { title: "Plumber", desc: "Expert installations, leak detection, fixture repairs, and comprehensive system optimizations." },
+                  { title: "Electrician", desc: "Certified wiring upgrades, smart lighting integration, electrical safety diagnostics, and panel repairs." },
+                  { title: "Painting", desc: "High-precision interior and exterior painting services utilizing premium, long-lasting color palettes." },
+                  { title: "Roofing Services", desc: "Structural maintenance and restorative repairs to ensure long-term protection from environmental damage." },
+                  { title: "House Cleaning Services", desc: "Meticulous, professional sanitization and organization for pristine, maintenance-free living." }
+                ].map((item) => (
+                  <div key={item.title} className="bg-paper-white/50 p-6 rounded-lg border border-forest-deep/5 shadow-sm">
+                    <h4 className="font-serif text-lg font-bold text-forest-deep mb-2">{item.title}</h4>
+                    <p className="text-sm text-on-surface-variant leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Collapsible FAQ Section */}
       <motion.section 
         initial={{ opacity: 0, y: 30 }}
