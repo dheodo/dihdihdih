@@ -1206,45 +1206,50 @@ ${leadForm.name || 'valued contact'}`;
               }
             }}
             initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            animate={homeProjects.length > 0 ? "visible" : "hidden"}
             className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-32"
           >
             <AnimatePresence mode="popLayout">
-              {homeProjects.map((project, index) => (
-                <motion.div 
-                  key={project.id}
-                  variants={{
-                    hidden: { opacity: 0, scale: 0.95, y: 30 },
-                    visible: { 
-                      opacity: 1, 
-                      scale: 1, 
-                      y: 0,
-                      transition: {
-                        duration: 0.5,
-                        ease: [0.16, 1, 0.3, 1]
+              {loading ? (
+                Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="aspect-[4/3] bg-gray-100 animate-pulse rounded-md" />
+                ))
+              ) : (
+                homeProjects.map((project, index) => (
+                  <motion.div 
+                    key={project.id}
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.95, y: 30 },
+                      visible: { 
+                        opacity: 1, 
+                        scale: 1, 
+                        y: 0,
+                        transition: {
+                          duration: 0.5,
+                          ease: [0.16, 1, 0.3, 1]
+                        }
+                      },
+                      exit: {
+                        opacity: 0,
+                        scale: 0.95,
+                        y: 10,
+                        transition: { duration: 0.2, ease: "easeIn" }
                       }
-                    },
-                    exit: {
-                      opacity: 0,
-                      scale: 0.95,
-                      y: 10,
-                      transition: { duration: 0.2, ease: "easeIn" }
-                    }
-                  }}
-                  className="w-full h-full transform-gpu"
-                >
-                  <ProjectHoverCard 
-                    project={project}
-                    index={index}
-                    layoutId={`project-card-${project.id}`}
-                    onClick={() => {
-                      setSelectedProject(project);
-                      setActiveGalleryIndex(0);
                     }}
-                  />
-                </motion.div>
-              ))}
+                    className="w-full h-full transform-gpu"
+                  >
+                    <ProjectHoverCard 
+                      project={project}
+                      index={index}
+                      layoutId={`project-card-${project.id}`}
+                      onClick={() => {
+                        setSelectedProject(project);
+                        setActiveGalleryIndex(0);
+                      }}
+                    />
+                  </motion.div>
+                ))
+              )}
             </AnimatePresence>
           </motion.div>
 
