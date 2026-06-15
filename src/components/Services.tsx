@@ -195,55 +195,9 @@ export default function Services({ onOpenInquiry }: ServicesProps) {
 
   const estimate = calculateEstimate();
 
-  const SERVICE_DESCRIPTIONS: Record<string, string> = {
-    "Interior Designer": "Tailored spatial planning, conceptual mood boards, and aesthetic refinement for luxury living.",
-    "Plumber": "Expert installations, leak detection, fixture repairs, and comprehensive system optimizations.",
-    "Painting": "High-precision interior and exterior painting services utilizing premium, long-lasting color palettes.",
-    "Electrician": "Certified wiring upgrades, smart lighting integration, electrical safety diagnostics, and panel repairs.",
-    "Furniture Maker": "Handcrafted, bespoke furniture tailored to exact space dimensions and material preferences.",
-    "Bathroom Renovator": "Revitalizing hygiene spaces with modern fixture integration and premium tile work.",
-    "Kitchen Renovator": "Optimizing culinary hubs with custom cabinetry, ergonomic layout enhancements, and durable material installation.",
-    "Roofing Services": "Structural maintenance and restorative repairs to ensure long-term protection from environmental damage.",
-    "House Cleaning Services": "Meticulous, professional sanitization and organization for pristine, maintenance-free living."
-  };
-
-  const [selectedService, setSelectedService] = useState<string | null>(null);
-
   return (
     <div id="services-page-root" className="bg-cream-soft text-forest-deep">
       
-      <AnimatePresence>
-        {selectedService && (
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-forest-deep/80 backdrop-blur-sm"
-            onClick={() => setSelectedService(null)}
-          >
-            <motion.div 
-              initial={{ scale: 0.95 }} 
-              animate={{ scale: 1 }} 
-              exit={{ scale: 0.95 }}
-              className="bg-paper-white p-8 rounded-2xl max-w-sm w-full shadow-2xl relative"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <h3 className="font-serif text-2xl font-bold text-forest-deep mb-4">{selectedService}</h3>
-              <p className="text-sm text-on-surface-variant leading-relaxed">
-                {SERVICE_DESCRIPTIONS[selectedService] || "Professional maintenance and design assistance."}
-              </p>
-              <button 
-                onClick={() => setSelectedService(null)} 
-                className="mt-8 w-full py-3 border border-forest-deep/20 rounded-full font-label-caps text-xs tracking-widest uppercase hover:bg-forest-deep hover:text-paper-white transition-colors"
-                type="button"
-              >
-                Close
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Editorial Services Page Hero */}
       <section className="py-14 xs:py-16 md:py-24 bg-cream-soft border-b border-sage-muted/10 relative overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-10">
@@ -390,14 +344,15 @@ export default function Services({ onOpenInquiry }: ServicesProps) {
           >
             {[
               "Interior Designer",
-              "Plumber",
+              "Plumbing Services",
               "Painting",
-              "Electrician",
-              "Furniture Maker",
+              "Electric services",
+              "Carpentry Services & Furniture making",
               "Bathroom Renovator",
               "Kitchen Renovator",
               "Roofing Services",
-              "House Cleaning Services"
+              "House Cleaning Services",
+              "Tiles works"
             ].map((service) => (
               <motion.div
                 key={service}
@@ -410,8 +365,7 @@ export default function Services({ onOpenInquiry }: ServicesProps) {
                   borderColor: "rgba(10, 35, 25, 0.3)",
                   boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)"
                 }}
-                className="bg-paper-white/80 backdrop-blur-md px-8 py-4 rounded-full border border-forest-deep/10 shadow-sm text-center font-serif text-sm font-semibold tracking-wide text-forest-deep cursor-pointer transition-all duration-300 transform"
-                onClick={() => setSelectedService(service)}
+                className="bg-paper-white/80 backdrop-blur-md px-8 py-4 rounded-full border border-forest-deep/10 shadow-sm text-center font-serif text-sm font-semibold tracking-wide text-forest-deep transition-all duration-300 transform"
               >
                 {service}
               </motion.div>

@@ -90,7 +90,7 @@ export default function AboutUs({ onOpenInquiry }: AboutUsProps) {
     },
     {
       question: "Do you offer premium facility maintenance or civil contractors services in Navi Mumbai?",
-      answer: "Yes, we are full-service civil contractors in Navi Mumbai. We provide elite, long-term premium facility maintenance Navi Mumbai programs, including bespoke plumbing, structural repairs, electrical upgrades, and routine premium masonry upkeep to keep custom estates functioning flawlessly."
+      answer: "Yes, we are full-service civil contractors in Navi Mumbai. We provide elite, long-term premium facility maintenance Navi Mumbai programs, including bespoke plumbing services, structural repairs, electric services upgrades, and routine premium masonry upkeep to keep custom estates functioning flawlessly."
     },
     {
       question: "Do you offer turn-key project management?",
@@ -358,9 +358,10 @@ export default function AboutUs({ onOpenInquiry }: AboutUsProps) {
               <div className="space-y-6">
                 {[
                   { title: "Interior Designer", desc: "Tailored spatial planning, conceptual mood boards, and aesthetic refinement for luxury living." },
-                  { title: "Furniture Maker", desc: "Handcrafted, bespoke furniture tailored to exact space dimensions and material preferences." },
+                  { title: "Carpentry Services & Furniture making", desc: "Handcrafted, bespoke furniture tailored to exact space dimensions and material preferences." },
                   { title: "Bathroom Renovator", desc: "Revitalizing hygiene spaces with modern fixture integration and premium tile work." },
-                  { title: "Kitchen Renovator", desc: "Optimizing culinary hubs with custom cabinetry, ergonomic layout enhancements, and durable material installation." }
+                  { title: "Kitchen Renovator", desc: "Optimizing culinary hubs with custom cabinetry, ergonomic layout enhancements, and durable material installation." },
+                  { title: "Tiles works", desc: "Precision installation of high-quality tiles for resilient, aesthetic surfaces." }
                 ].map((item) => (
                   <div key={item.title} className="bg-paper-white/50 p-6 rounded-lg border border-forest-deep/5 shadow-sm">
                     <h4 className="font-serif text-lg font-bold text-forest-deep mb-2">{item.title}</h4>
@@ -380,8 +381,8 @@ export default function AboutUs({ onOpenInquiry }: AboutUsProps) {
               <h3 className="font-serif text-2xl font-bold text-forest-deep mb-8 pb-2 border-b-2 border-sage-muted/20">Essential Maintenance</h3>
               <div className="space-y-6">
                 {[
-                  { title: "Plumber", desc: "Expert installations, leak detection, fixture repairs, and comprehensive system optimizations." },
-                  { title: "Electrician", desc: "Certified wiring upgrades, smart lighting integration, electrical safety diagnostics, and panel repairs." },
+                  { title: "Plumbing Services", desc: "Expert installations, leak detection, fixture repairs, and comprehensive system optimizations." },
+                  { title: "Electric services", desc: "Certified wiring upgrades, smart lighting integration, electrical safety diagnostics, and panel repairs." },
                   { title: "Painting", desc: "High-precision interior and exterior painting services utilizing premium, long-lasting color palettes." },
                   { title: "Roofing Services", desc: "Structural maintenance and restorative repairs to ensure long-term protection from environmental damage." },
                   { title: "House Cleaning Services", desc: "Meticulous, professional sanitization and organization for pristine, maintenance-free living." }

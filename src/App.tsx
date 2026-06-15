@@ -180,6 +180,16 @@ const fadeUpItemVariants = {
 };
 
 export default function App() {
+  // Preload hero images and logo to reduce perceived latency
+  useEffect(() => {
+    IMAGES.imaginationGrid.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+    const logo = new Image();
+    logo.src = '/logo.png';
+  }, []);
+
   const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {
@@ -304,10 +314,12 @@ export default function App() {
   }, []);
 
   const handleNextSlide = () => {
+    if (displayCarouselSlides.length === 0) return;
     setCarouselIndex((prev) => (prev + 1) % displayCarouselSlides.length);
   };
 
   const handlePrevSlide = () => {
+    if (displayCarouselSlides.length === 0) return;
     setCarouselIndex((prev) => (prev - 1 + displayCarouselSlides.length) % displayCarouselSlides.length);
   };
 
@@ -764,9 +776,10 @@ ${leadForm.name || 'valued contact'}`;
                 setCurrentPage('home');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="font-serif font-extrabold tracking-widest text-base sm:text-lg md:text-xl lg:text-2xl text-forest-deep block scroll-smooth hover:opacity-90 uppercase whitespace-nowrap"
+              className="flex items-center gap-4 font-serif font-extrabold tracking-widest text-base sm:text-lg md:text-xl lg:text-2xl text-forest-deep scroll-smooth hover:opacity-90 uppercase whitespace-nowrap"
             >
-              Maintenance Masters
+              <img src="/logo.png" alt="Maintenance Masters Logo" className="h-[84px] w-[81px] object-contain pt-[16px] pb-0" width="81" height="84" loading="eager" />
+              <span>Maintenance Masters</span>
             </a>
           </div>
 
@@ -1047,15 +1060,82 @@ ${leadForm.name || 'valued contact'}`;
             className="relative w-full overflow-hidden"
           >
             {/* Aspect controller frame */}
-            <div className="relative min-h-[680px] xs:min-h-[620px] md:h-[640px] w-full overflow-hidden rounded-xl bg-forest-deep/5 shadow-inner group">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={carouselIndex}
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -30 }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
-                  style={{ willChange: 'transform, opacity' }}
+            <div className="relative min-h-[680px] xs:min-h-[620px] md:h-[640px] w-full rounded-xl bg-forest-deep/5 shadow-inner group">
+              
+              {/* 1. Content Clipping Container (overflow-hidden) */}
+              <div className="absolute inset-0 w-full h-full overflow-hidden rounded-xl">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={carouselIndex}
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -30 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    style={{ willChange: 'transform, opacity' }}
+                    className="absolute inset-0 flex flex-col md:flex-row h-full w-full"
+                  >
+                    {/* Left Column: Image wrapper */}
+                    <div className="relative w-full md:w-3/5 h-[200px] xs:h-[240px] md:h-full overflow-hidden">
+                      <img 
+                        referrerPolicy="no-referrer"
+                        src={displayCarouselSlides[carouselIndex].image || null} 
+                        alt={displayCarouselSlides[carouselIndex].title} 
+                        className="w-full h-full object-cover object-center select-none pointer-events-none scale-[1.01] will-change-transform"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-transparent to-forest-deep/15"></div>
+                    </div>
+
+                    {/* Right Column: Descriptions & Interactive Request tools */}
+                    <div className="w-full md:w-2/5 bg-forest-deep text-paper-white p-6 xs:p-8 md:p-12 flex flex-col justify-between h-[calc(100%-200px)] xs:h-[calc(100%-240px)] md:h-full">
+                      <div className="space-y-4">
+                        <h3 className="font-headline-sm text-headline-sm font-serif text-paper-white leading-snug font-bold font-extrabold">
+                          {displayCarouselSlides[carouselIndex].title}
+                        </h3>
+
+                        <div className="flex items-center gap-2">
+                          <span className="inline-block w-1.5 h-1.5 rounded-full bg-sage-muted"></span>
+                          <span className="font-label-caps text-[10px] tracking-widest text-sage-muted uppercase font-bold">
+                            {displayCarouselSlides[carouselIndex].subtitle}
+                          </span>
+                        </div>
+                        
+                        <div className="max-h-[220px] overflow-y-auto pr-2 custom-scrollbar">
+                          <p className="font-body-md text-sm text-paper-white/90 leading-relaxed">
+                            {displayCarouselSlides[carouselIndex].description}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-6 border-t border-paper-white/10 mt-6 sm:mt-0">
+                        <button
+                          onClick={() => {
+                            const slide = displayCarouselSlides[carouselIndex];
+                            handleOpenGeneralInquiry(`Inspiration view of "${slide.title}"`);
+                          }}
+                          className="flex items-center gap-4 group/btn cursor-pointer relative z-20"
+                          aria-label="Know More"
+                        >
+                          <span className="font-label-caps text-[11px] tracking-[0.25em] text-paper-white uppercase font-extrabold">
+                            Know More
+                          </span>
+                          <div className="w-11 h-11 flex items-center justify-center bg-forest-deep text-paper-white hover:bg-forest-deep/90 transition-all rounded-full shadow-lg group-hover/btn:translate-x-1">
+                            <ArrowRight className="w-5 h-5" />
+                          </div>
+                        </button>
+                        
+                        <span className="font-mono text-[10px] tracking-widest text-paper-white/40">
+                          {String(carouselIndex + 1).padStart(2, '0')} / {String(displayCarouselSlides.length).padStart(2, '0')}
+                        </span>
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+              
+              {/* 2. Drag Interaction Layer (Must be separate from clipping area) */}
+              <motion.div
+                  className="absolute inset-0 z-10 cursor-grab active:cursor-grabbing"
                   drag="x"
                   dragConstraints={{ left: 0, right: 0 }}
                   dragElastic={0.15}
@@ -1067,68 +1147,10 @@ ${leadForm.name || 'valued contact'}`;
                       handlePrevSlide();
                     }
                   }}
-                  className="absolute inset-0 cursor-grab active:cursor-grabbing flex flex-col md:flex-row h-full w-full"
-                >
-                  {/* Left Column: Image wrapper */}
-                  <div className="relative w-full md:w-3/5 h-[200px] xs:h-[240px] md:h-full overflow-hidden">
-                    <img 
-                      referrerPolicy="no-referrer"
-                      src={displayCarouselSlides[carouselIndex].image || null} 
-                      alt={displayCarouselSlides[carouselIndex].title} 
-                      className="w-full h-full object-cover object-center select-none pointer-events-none scale-[1.01] will-change-transform"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-transparent to-forest-deep/15"></div>
-                  </div>
+              />
 
-                  {/* Right Column: Descriptions & Interactive Request tools */}
-                  <div className="w-full md:w-2/5 bg-forest-deep text-paper-white p-6 xs:p-8 md:p-12 flex flex-col justify-between h-[calc(100%-200px)] xs:h-[calc(100%-240px)] md:h-full">
-                    <div className="space-y-4">
-                      <h3 className="font-headline-sm text-headline-sm font-serif text-paper-white leading-snug font-bold font-extrabold">
-                        {displayCarouselSlides[carouselIndex].title}
-                      </h3>
-
-                      <div className="flex items-center gap-2">
-                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-sage-muted"></span>
-                        <span className="font-label-caps text-[10px] tracking-widest text-sage-muted uppercase font-bold">
-                          {displayCarouselSlides[carouselIndex].subtitle}
-                        </span>
-                      </div>
-                      
-                      <div className="max-h-[220px] overflow-y-auto pr-2 custom-scrollbar">
-                        <p className="font-body-md text-sm text-paper-white/90 leading-relaxed">
-                          {displayCarouselSlides[carouselIndex].description}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between pt-6 border-t border-paper-white/10 mt-6 sm:mt-0">
-                      <button
-                        onClick={() => {
-                          const slide = displayCarouselSlides[carouselIndex];
-                          handleOpenGeneralInquiry(`Inspiration view of "${slide.title}"`);
-                        }}
-                        className="flex items-center gap-4 group/btn cursor-pointer"
-                        aria-label="Know More"
-                      >
-                        <span className="font-label-caps text-[11px] tracking-[0.25em] text-paper-white uppercase font-extrabold">
-                          Know More
-                        </span>
-                        <div className="w-11 h-11 flex items-center justify-center bg-forest-deep text-paper-white hover:bg-forest-deep/90 transition-all rounded-full shadow-lg group-hover/btn:translate-x-1">
-                          <ArrowRight className="w-5 h-5" />
-                        </div>
-                      </button>
-                      
-                      <span className="font-mono text-[10px] tracking-widest text-paper-white/40">
-                        {String(carouselIndex + 1).padStart(2, '0')} / {String(displayCarouselSlides.length).padStart(2, '0')}
-                      </span>
-                    </div>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Navigation Arrows */}
-              <div className="absolute top-1/2 left-4 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity hidden sm:flex items-center">
+              {/* 3. Navigation Arrows (Above drag layer) */}
+              <div className="absolute top-1/2 left-4 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity hidden sm:flex items-center z-20">
                 <button 
                   onClick={handlePrevSlide}
                   className="p-3 bg-paper-white/15 backdrop-blur-md text-paper-white hover:bg-paper-white hover:text-forest-deep rounded-full transition-all cursor-pointer shadow-md select-none"
@@ -1138,7 +1160,7 @@ ${leadForm.name || 'valued contact'}`;
                 </button>
               </div>
               
-              <div className="absolute top-1/2 right-4 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity hidden sm:flex items-center">
+              <div className="absolute top-1/2 right-4 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity hidden sm:flex items-center z-20">
                 <button 
                   onClick={handleNextSlide}
                   className="p-3 bg-paper-white/15 backdrop-blur-md text-paper-white hover:bg-paper-white hover:text-forest-deep rounded-full transition-all cursor-pointer shadow-md select-none"
@@ -1155,13 +1177,15 @@ ${leadForm.name || 'valued contact'}`;
                 <button
                   key={dotIdx}
                   onClick={() => setCarouselIndex(dotIdx)}
-                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                  className={`p-2 cursor-pointer group`}
+                  aria-label={`Slide button ${dotIdx + 1}`}
+                >
+                  <div className={`h-2 rounded-full transition-all duration-300 ${
                     carouselIndex === dotIdx 
                       ? 'w-8 bg-forest-deep' 
-                      : 'w-2 bg-forest-deep/20 hover:bg-forest-deep/45'
-                  }`}
-                  aria-label={`Slide button ${dotIdx + 1}`}
-                />
+                      : 'w-2 bg-forest-deep/20 group-hover:bg-forest-deep/45'
+                  }`} />
+                </button>
               ))}
             </div>
           </motion.div>
@@ -1755,8 +1779,9 @@ ${leadForm.name || 'valued contact'}`;
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-paper-white/10 pb-16">
             <div className="md:col-span-2 space-y-6">
-              <h2 className="font-headline-md text-headline-md font-serif text-paper-white tracking-widest font-bold">
-                Maintenance Masters
+              <h2 className="flex items-center gap-4 font-headline-md text-headline-md font-serif text-paper-white tracking-widest font-bold">
+                <img src="/logo.png" alt="Maintenance Masters Logo" className="h-16 w-16 object-contain" width="64" height="64" loading="lazy" />
+                <span>Maintenance Masters</span>
               </h2>
               <p className="font-body-md text-sm text-paper-white/60 max-w-sm leading-relaxed">
                 Discover the future of Interior curation and atmospheric spaces with Maintenance Masters. Effortlessly design, structure, and perfect your living experience. Read about our{' '}

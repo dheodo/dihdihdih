@@ -258,6 +258,20 @@ export default function ProjectPage({ onProjectSelect, onNavigateToContact, proj
             className="fixed inset-0 z-[101] flex items-center justify-center p-4 bg-forest-deep/96"
             onClick={handleClose}
           >
+            <button 
+                onClick={(e) => { e.stopPropagation(); handlePrev(e); }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-paper-white/80 rounded-full hover:bg-paper-white transition-colors z-[102] text-forest-deep shadow-md"
+                aria-label="Previous Project"
+            >
+                <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button 
+                onClick={(e) => { e.stopPropagation(); handleNext(e); }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-paper-white/80 rounded-full hover:bg-paper-white transition-colors z-[102] text-forest-deep shadow-md"
+                aria-label="Next Project"
+            >
+                <ChevronRight className="w-6 h-6" />
+            </button>
             <motion.div
               initial={{ scale: 0.98, y: 10, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
@@ -266,20 +280,6 @@ export default function ProjectPage({ onProjectSelect, onNavigateToContact, proj
               className="bg-cream-soft rounded-2xl w-full max-w-4xl max-h-[94vh] overflow-hidden flex flex-col relative transform-gpu"
               onClick={(e) => e.stopPropagation()}
             >
-              <button 
-                  onClick={handlePrev}
-                  className="absolute left-4 top-1/3 -translate-y-1/2 p-3 bg-paper-white/80 rounded-full hover:bg-paper-white transition-colors z-10 text-forest-deep shadow-md"
-                  aria-label="Previous Project"
-              >
-                  <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button 
-                  onClick={handleNext}
-                  className="absolute right-4 top-1/3 -translate-y-1/2 p-3 bg-paper-white/80 rounded-full hover:bg-paper-white transition-colors z-10 text-forest-deep shadow-md"
-                  aria-label="Next Project"
-              >
-                  <ChevronRight className="w-6 h-6" />
-              </button>
               
               <div className="p-4 xs:p-6 md:p-8 overflow-y-auto">
                 <button 
