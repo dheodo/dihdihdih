@@ -304,6 +304,7 @@ export default function App() {
 
   // Touch carousel active index for Inspiration section
   const [carouselIndex, setCarouselIndex] = useState(0);
+  const [carouselDirection, setCarouselDirection] = useState(1);
   const [heroCarouselIndex, setHeroCarouselIndex] = useState(0);
 
   useEffect(() => {
@@ -315,11 +316,13 @@ export default function App() {
 
   const handleNextSlide = () => {
     if (displayCarouselSlides.length === 0) return;
+    setCarouselDirection(1);
     setCarouselIndex((prev) => (prev + 1) % displayCarouselSlides.length);
   };
 
   const handlePrevSlide = () => {
     if (displayCarouselSlides.length === 0) return;
+    setCarouselDirection(-1);
     setCarouselIndex((prev) => (prev - 1 + displayCarouselSlides.length) % displayCarouselSlides.length);
   };
 
@@ -1063,16 +1066,17 @@ ${leadForm.name || 'valued contact'}`;
             <div className="relative min-h-[680px] xs:min-h-[620px] md:h-[640px] w-full rounded-xl bg-forest-deep/5 shadow-inner group">
               
               {/* 1. Content Clipping Container (overflow-hidden) */}
-              <div className="absolute inset-0 w-full h-full overflow-hidden rounded-xl">
-                <AnimatePresence mode="wait">
+              <div className="absolute inset-0 w-full h-full overflow-hidden rounded-xl bg-forest-deep">
+                <AnimatePresence initial={false} custom={carouselDirection}>
                   <motion.div
                     key={carouselIndex}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -30 }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                    style={{ willChange: 'transform, opacity' }}
-                    className="absolute inset-0 flex flex-col md:flex-row h-full w-full"
+                    custom={carouselDirection}
+                    initial={(d) => ({ x: d > 0 ? "100%" : "-100%" })}
+                    animate={{ x: 0 }}
+                    exit={(d) => ({ x: d > 0 ? "-100%" : "100%" })}
+                    transition={{ duration: 0.8, ease: [0.25, 1, 0.35, 1] }}
+                    style={{ willChange: 'transform' }}
+                    className="absolute inset-0 flex flex-col md:flex-row h-full w-full bg-forest-deep text-paper-white"
                   >
                     {/* Left Column: Image wrapper */}
                     <div className="relative w-full md:w-3/5 h-[200px] xs:h-[240px] md:h-full overflow-hidden">
@@ -1176,7 +1180,10 @@ ${leadForm.name || 'valued contact'}`;
               {displayCarouselSlides.map((_, dotIdx) => (
                 <button
                   key={dotIdx}
-                  onClick={() => setCarouselIndex(dotIdx)}
+                  onClick={() => {
+                    setCarouselDirection(dotIdx > carouselIndex ? 1 : -1);
+                    setCarouselIndex(dotIdx);
+                  }}
                   className={`p-2 cursor-pointer group`}
                   aria-label={`Slide button ${dotIdx + 1}`}
                 >
@@ -1382,16 +1389,20 @@ ${leadForm.name || 'valued contact'}`;
                     setCurrentPage('about');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  variants={fadeInItemVariants}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ type: "spring", damping: 20, stiffness: 100 }}
+                  whileHover={{ scale: 1.02 }}
                   key={belief.id}
-                  className="relative cursor-pointer"
+                  className="relative cursor-pointer h-full"
                 >
                   <div
-                    className="p-10 bg-cream-soft rounded-lg flex flex-col justify-between group transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-lg hover:scale-[1.01] relative overflow-hidden h-full"
+                    className="p-10 bg-cream-soft rounded-lg flex flex-col justify-between group transition-all duration-300 ease-out border border-transparent hover:border-sage-muted/60 hover:shadow-[0_0_25px_rgba(156,175,136,0.4)] relative overflow-hidden h-full z-10"
                   >
                     <div className="absolute top-0 left-0 w-1.5 h-full bg-sage-muted opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div>
-                      <div className="inline-block p-4 bg-paper-white rounded-xl mb-8 group-hover:bg-forest-deep [&>svg]:group-hover:text-paper-white transition-all duration-300">
+                      <div className="inline-block p-4 bg-paper-white rounded-xl mb-8 group-hover:bg-forest-deep [&>svg]:group-hover:text-paper-white transition-all duration-300 shadow-sm">
                         {renderBeliefIcon()}
                       </div>
                       <h3 className="font-headline-sm text-headline-sm font-serif text-forest-deep mb-4 font-bold font-extrabold">{belief.title}</h3>
