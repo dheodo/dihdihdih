@@ -781,7 +781,7 @@ ${leadForm.name || 'valued contact'}`;
               }}
               className="flex items-center gap-4 font-serif font-extrabold tracking-widest text-base sm:text-lg md:text-xl lg:text-2xl text-forest-deep scroll-smooth hover:opacity-90 uppercase whitespace-nowrap"
             >
-              <img src="/logo.png" alt="Maintenance Masters Logo" className="h-[56px] w-[54px] md:h-[64px] md:w-[62px] object-contain" width="62" height="64" loading="eager" />
+              <img src="/logo.png" alt="Maintenance Masters Logo" className="h-[40px] w-[38px] lg:h-[84px] lg:w-[81px] object-contain lg:pt-[16px] lg:pb-0" width="81" height="84" loading="eager" />
               <span>Maintenance Masters</span>
             </a>
           </div>
