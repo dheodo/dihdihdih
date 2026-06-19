@@ -8,15 +8,17 @@
         "title": { "type": "string" },
         "subtitle": { "type": "string" },
         "image": { "type": "string" },
-        "category": { "type": "string", "enum": ["residential", "commercial", "renovation", "all"] },
+        "category": { "type": "string", "enum": ["residential", "commercial", "renovation", "all", "kitchen&bath", "office design"] },
         "description": { "type": "string" },
         "location": { "type": "string" },
         "year": { "type": "string" },
         "aspectRatio": { "type": "string" },
         "createdAt": { "type": "number", "description": "Timestamp" },
-        "isFeatured": { "type": "boolean", "description": "Whether to show on homepage" }
+        "isFeatured": { "type": "boolean", "description": "Whether to show on homepage" },
+        "showInCarousel": { "type": "boolean", "description": "Whether to show in hero carousel" },
+        "galleryImages": { "type": "array", "description": "An array of additional project images", "items": { "type": "string" } }
       },
-      "required": ["title", "subtitle", "image", "category", "description", "location", "year", "aspectRatio", "createdAt", "isFeatured"]
+      "required": ["title", "subtitle", "image", "category", "description", "location", "year", "aspectRatio", "createdAt", "isFeatured", "showInCarousel", "galleryImages"]
     },
     "admin": {
       "title": "Admin",

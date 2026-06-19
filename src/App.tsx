@@ -1791,7 +1791,6 @@ ${leadForm.name || 'valued contact'}`;
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-paper-white/10 pb-16">
             <div className="md:col-span-2 space-y-6">
               <h2 className="flex items-center gap-4 font-headline-md text-headline-md font-serif text-paper-white tracking-widest font-bold">
-                <img src="/logo.png" alt="Maintenance Masters Logo" className="h-16 w-16 object-contain" width="64" height="64" loading="lazy" />
                 <span>Maintenance Masters</span>
               </h2>
               <p className="font-body-md text-sm text-paper-white/60 max-w-sm leading-relaxed">

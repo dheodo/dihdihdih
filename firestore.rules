@@ -26,47 +26,53 @@ service cloud.firestore {
 
     // Projects Rule
     function isValidProject(data) {
-      return data.keys().hasAll(['title', 'subtitle', 'image', 'category', 'description', 'location', 'year', 'aspectRatio', 'createdAt', 'isFeatured'])
-        && data.keys().size() >= 10
+      return data.keys().hasAll(['title', 'subtitle', 'image', 'category', 'description', 'location', 'year', 'aspectRatio', 'createdAt', 'isFeatured', 'showInCarousel', 'galleryImages'])
+        && data.keys().size() == 12
         && data.title is string && data.title.size() > 0 && data.title.size() <= 200
         && data.subtitle is string && data.subtitle.size() <= 200
         && data.image is string && data.image.size() <= 900000
-        && data.category is string && data.category in ['residential', 'commercial', 'renovation', 'all']
+        && data.category is string && data.category in ['residential', 'commercial', 'renovation', 'all', 'kitchen&bath', 'office design']
         && data.description is string && data.description.size() <= 10000
         && data.location is string && data.location.size() <= 200
         && data.year is string && data.year.size() <= 10
         && data.aspectRatio is string && data.aspectRatio.size() <= 50
         && data.createdAt is number
-        && data.isFeatured is bool;
+        && data.isFeatured is bool
+        && data.showInCarousel is bool
+        && data.galleryImages is list;
     }
 
     function isValidProjectUpdate(diff) {
-      return diff.affectedKeys().hasOnly(['title', 'subtitle', 'image', 'category', 'description', 'location', 'year', 'aspectRatio', 'isFeatured']);
+      return diff.affectedKeys().hasOnly(['title', 'subtitle', 'image', 'category', 'description', 'location', 'year', 'aspectRatio', 'isFeatured', 'showInCarousel', 'galleryImages']);
     }
 
     match /projects/{projectId} {
       // Allow read for everyone (public portfolio)
-      allow read, list: if true;
+      allow get, list: if true;
 
       allow create: if isValidId(projectId) 
+        && isAdmin()
         && isValidProject(incoming());
 
       allow update: if isValidId(projectId) 
+        && isAdmin()
         && incoming().createdAt == existing().createdAt
         && isValidProjectUpdate(incoming().diff(existing()))
         && (
           incoming().title is string && incoming().title.size() > 0 && incoming().title.size() <= 200
           && incoming().subtitle is string && incoming().subtitle.size() <= 200
           && incoming().image is string && incoming().image.size() <= 900000
-          && incoming().category is string && incoming().category in ['residential', 'commercial', 'renovation', 'all']
+          && incoming().category is string && incoming().category in ['residential', 'commercial', 'renovation', 'all', 'kitchen&bath', 'office design']
           && incoming().description is string && incoming().description.size() <= 10000
           && incoming().location is string && incoming().location.size() <= 200
           && incoming().year is string && incoming().year.size() <= 10
           && incoming().aspectRatio is string && incoming().aspectRatio.size() <= 50
           && incoming().isFeatured is bool
+          && incoming().showInCarousel is bool
+          && incoming().galleryImages is list
         );
         
-      allow delete: if isValidId(projectId);
+      allow delete: if isValidId(projectId) && isAdmin();
     }
 
     match /admins/{userId} {
